@@ -13,16 +13,19 @@ interface IRequest {
 
 @injectable()
 class CreateRentalUseCase {
-    
-    constructor(@inject("RentalsRepository")
+
+    constructor(
+        @inject("RentalsRepository") 
         private rentalsRepository: IRentalsRepository,
-        @inject("DayjsDateProvider")
-        private dateProvider: IDateProvider) { }
+        @inject("DayjsDateProvider") 
+        private dateProvider: IDateProvider) { 
+
+        }
 
     async execute({
-        user_id,
         car_id,
-        expected_return_date }: IRequest): Promise<Rental> {
+        expected_return_date,
+        user_id }: IRequest): Promise<Rental> {
         const minimumHour = 24;
         const carUnavailable = await this.rentalsRepository.findOpenRentalByCar(car_id);
 
@@ -38,20 +41,19 @@ class CreateRentalUseCase {
 
         const dateNow = this.dateProvider.dateNow();
         const compare = this.dateProvider.compareInHours(
-             dateNow,expected_return_date);
+            dateNow, expected_return_date);
 
         if (compare < minimumHour) {
             throw new AppError("Invalid return time");
         }
 
-        console.log("Compare Date", compare);
 
         const rental = await this.rentalsRepository.create({
             user_id,
             car_id,
             expected_return_date
         });
-
+        
         return rental;
     }
 }

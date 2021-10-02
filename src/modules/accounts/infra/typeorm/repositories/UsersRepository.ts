@@ -13,8 +13,10 @@ class UsersRepository implements IUsersRepository{
     }
 
     async findById(id: string): Promise<User> {
+        
+        console.log("user repo",id);
         const user = await this.repository.findOne(id);
-
+        
         return user;
     }
 

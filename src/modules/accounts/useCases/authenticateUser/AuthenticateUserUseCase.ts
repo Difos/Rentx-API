@@ -14,7 +14,7 @@ interface IRequest {
 interface IResponse{
     user:{
         name:string,
-        email:string,
+        email:string
     },
     token:string
 }
@@ -27,7 +27,7 @@ class AuthenticateUserUseCase {
     async execute({email, password}:IRequest):Promise<IResponse>{
         //usuario existe
         const user = await this.usersRepository.findByEmail(email);
-
+        
         if(!user){
             throw new Error("Email or password incorrect!");
         }
@@ -45,12 +45,13 @@ class AuthenticateUserUseCase {
             expiresIn: "1d"
         });
 
+        
         const tokenReturn: IResponse = {
             token,
             user:{
                 name:user.name,
                 email:user.email
-            }
+            },
         }
         return tokenReturn;
     }
