@@ -15,20 +15,21 @@ describe("Create Category Controller", ()=>{
 
     await connection.runMigrations();
 
-
     const id = uuid();
     const password = await hash("admin", 8);
 
     await connection.query(
-        `insert into USERS(id,name,email,password,"isAdmin",created_at, driver_license)
+        `INSERT INTO USERS(id,name,email,password,"isAdmin",created_at, driver_license)
         values('${id}','admin','admin@gmail.com','${password}',true, 'now()','xxxxx');`);
 
   });
 
-
+  afterAll(async ()=>{
+    await connection.dropDatabase();
+    await connection.close();
+  });
 
   it("should be able to create a new category",async ()=>{
-
 
     const responseToken = await request(app).post("/sessions")
     .send({
@@ -41,7 +42,7 @@ describe("Create Category Controller", ()=>{
     console.log(responseToken.body);
 
     const response = await request(app)
-    .get("/categories")
+    .post("/categories")
     .send({ 
       name:"Categoty supertest", 
       description:"Category supertest"

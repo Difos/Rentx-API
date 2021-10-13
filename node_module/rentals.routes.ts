@@ -1,4 +1,5 @@
-import { ensureAuthenticated } from '../middlewares/ensureAuthenticated';
+
+import { ensureAuthenticated } from '@shared/infra/http/middlewares/ensureAuthenticated';
 import { CreateRentalController } from '@modules/rentals/useCases/createRental/CreateRentalController';
 import { DevolutionRentalController } from '@modules/rentals/useCases/devolutionRentals/DevolutionRentalController';
 import {Router} from 'express';
