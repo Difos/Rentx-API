@@ -79,3 +79,14 @@ Ao realizar a devolução, o osuario deverá ser liberado para outro aluguel.
 Ao realizar a devolução, deverá ser calculado o total do Aluguel
 Caso o horário de devolução seja superior ao horário previsto de entrega, deverá ser cobrado multa proporcional aos dias de atraso.
 Caso haja multa, deverá ser somado ao total do alguel.
+
+# Recuperar Senha
+
+**RF**
+- Deve ser possivel o usuário recuperar a senha informando o e-mail
+- O usuário deve receber um e-mail. com o passo a passo para recuperação da senha
+- O usuário deve conseguir inserir uma nova Senha
+
+**RN**
+- O usuário precisa informar uma nova senha
+- O link enviado para a recuperação deve expirar em 3 horas
