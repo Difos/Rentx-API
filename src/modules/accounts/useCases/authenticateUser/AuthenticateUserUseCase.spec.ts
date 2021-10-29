@@ -3,17 +3,28 @@ import { ICreateUserDTO } from "@modules/accounts/dtos/ICreateUserDTO";
 import { UserRepositoryInMemory } from "@modules/accounts/repositories/in-memory/UserRepositoryInMemory";
 import { CreateUserUseCase } from "../createUser/CreateUserUseCase";
 import { AuthenticateUserUseCase } from "./AuthenticateUserUseCase";
+import { UserTokensRepositoryInMemory } from "@modules/accounts/repositories/in-memory/UserTokensRepositoryInMemory";
+import { DayjsDateProvider } from "@shared/container/providers/DateProvider/Implementations/DayjsDateProvider";
 
 
 let authenticateUserUseCase: AuthenticateUserUseCase;
 let usersRepositoryInMemory: UserRepositoryInMemory;
+let usersTokensRepositoryInMemory: UserTokensRepositoryInMemory;
 let createUserUseCase: CreateUserUseCase;
+let dateProvider: DayjsDateProvider;
 
 describe("Authenticate User", () => {
 
     beforeEach(() => {
         usersRepositoryInMemory = new UserRepositoryInMemory();
-        authenticateUserUseCase = new AuthenticateUserUseCase(usersRepositoryInMemory);
+        usersTokensRepositoryInMemory = new UserTokensRepositoryInMemory();
+        dateProvider = new DayjsDateProvider();
+
+        authenticateUserUseCase = new AuthenticateUserUseCase(
+            usersRepositoryInMemory,
+            usersTokensRepositoryInMemory,
+            dateProvider);
+            
         createUserUseCase = new CreateUserUseCase(usersRepositoryInMemory);
     });
 
@@ -39,9 +50,9 @@ describe("Authenticate User", () => {
 
     it("should not be able to authenticate an noexistent user", async () => {
         await expect(authenticateUserUseCase.execute({
-                email: "false@email.com",
-                password: "1234"
-            })
+            email: "false@email.com",
+            password: "1234"
+        })
         ).rejects.toEqual(new AppError("Email or password incorrect!"));
     })
 

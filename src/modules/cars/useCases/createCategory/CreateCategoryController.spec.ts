@@ -37,7 +37,7 @@ describe("Create Category Controller", ()=>{
       password:"admin"
     });
 
-    const { token } = responseToken.body;
+    const { refresh_token } = responseToken.body;
 
     console.log(responseToken.body);
 
@@ -47,7 +47,7 @@ describe("Create Category Controller", ()=>{
       name:"Categoty supertest", 
       description:"Category supertest"
     }).set({
-      Autorization : `Bearer ${token}`
+      Autorization : `Bearer ${refresh_token}`
     })
 
     expect(response.status).toBe(201);
