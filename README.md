@@ -90,3 +90,5 @@ Caso haja multa, deverá ser somado ao total do alguel.
 **RN**
 - O usuário precisa informar uma nova senha
 - O link enviado para a recuperação deve expirar em 3 horas
+
+

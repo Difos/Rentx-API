@@ -1,4 +1,5 @@
 import express, { NextFunction,Request,Response } from 'express';
+import "dotenv/config";
 import "express-async-errors";
 import createConnection from "../typeorm";
 import "@shared/container";
