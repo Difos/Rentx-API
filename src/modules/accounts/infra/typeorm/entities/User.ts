@@ -1,40 +1,56 @@
-import {v4 as uuidV4} from "uuid"
-import {Column, CreateDateColumn, Entity, PrimaryColumn} from "typeorm";
+import { v4 as uuidV4 } from "uuid"
+import { Column, CreateDateColumn, Entity, PrimaryColumn } from "typeorm";
+import { Expose } from "class-transformer";
 
 @Entity("users")
-class User{
+class User {
 
     @PrimaryColumn()
     id: string;
 
     @Column()
-    name:string;
+    name: string;
 
     @Column()
-    email:string;
+    email: string;
 
     @Column()
-    password:string;
+    password: string;
 
     @Column()
-    driver_license:string;
+    driver_license: string;
 
     @Column()
-    isAdmin:boolean;
+    isAdmin: boolean;
 
     @Column()
-    avatar:string; 
-    
+    avatar: string;
+
     @CreateDateColumn()
-    created_at:Date;
+    created_at: Date;
+
+    @Expose({ name: "avatar_url" })
+    avatar_url(): string {
+        switch (process.env.disk) {
+            case "s3": {
+                return `${process.env.AWS_BUCKET_URL}/avatar/${this.avatar}`;
+            }
+            case "local": {
+                return `${process.env.APP_API_URL}/avatar/${this.avatar}`;
+            }
+            default:
+                null;
+
+        }
+    }
 
     constructor() {
-        if(!this.id){
+        if (!this.id) {
             this.id = uuidV4();
         }
-        
+
     }
 
 }
 
-export {User}
+export { User }
