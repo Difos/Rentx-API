@@ -10,9 +10,18 @@ pids
 *.seed
 *.pid.lock
 
+node_modules
+.vscode
+
+coverage
+
+tmp/*
 
 .npm
 
 .eslintcache
 
 .env
+!tmp/.gitkeep
+dist
+ormconfig.json
