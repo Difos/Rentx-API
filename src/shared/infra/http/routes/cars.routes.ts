@@ -21,7 +21,7 @@ const upload = multer(uploadConfig)
 
 carsRoutes.post("/",ensureAuthenticated,ensureAdmin, createCarController.handle);
 
-carsRoutes.get("/available" , listAvailableCarsController.handle);
+carsRoutes.get("/available" ,ensureAuthenticated, listAvailableCarsController.handle);
 carsRoutes.post("/specification/:id",ensureAuthenticated,ensureAdmin, createCarSpecificationController.handle);
 carsRoutes.post("/images/:id",ensureAuthenticated,ensureAdmin,upload.array("images"), uploadCarImagesController.handle);
 export{carsRoutes};
